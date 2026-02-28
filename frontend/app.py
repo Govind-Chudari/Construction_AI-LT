@@ -1,4 +1,3 @@
-# frontend/app.py
 """
 ConstructAI — Streamlit Dashboard
 Site engineers upload drone/mobile photos + CAD references here.
@@ -19,7 +18,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# ─── Page Config ────────────────────────────────────────────────────────────
+# Page Config 
 st.set_page_config(
     page_title="ConstructAI — Site Intelligence",
     page_icon="🏗️",
@@ -27,7 +26,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ─── Custom CSS ─────────────────────────────────────────────────────────────
+# Custom CSS 
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Bebas+Neue&family=Manrope:wght@400;600;800&display=swap');
@@ -365,6 +364,19 @@ def mock_analysis(cad_coords, image_bytes):
     }
 
 
+# ─── Initialize Session State ────────────────────────────────────────────────
+if "cad_elements" not in st.session_state:
+    st.session_state.cad_elements = [
+        {"object_type": "Pillar", "x": 160, "y": 200, "width": 50, "height": 70},
+        {"object_type": "Pillar", "x": 320, "y": 200, "width": 50, "height": 70},
+        {"object_type": "Pillar", "x": 480, "y": 200, "width": 50, "height": 70},
+        {"object_type": "Beam", "x": 320, "y": 120, "width": 300, "height": 30},
+    ]
+
+if "analysis_result" not in st.session_state:
+    st.session_state.analysis_result = None
+
+
 # ─── Sidebar ─────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
@@ -383,14 +395,6 @@ with st.sidebar:
     # ── CAD Coordinate Input ─────────────────
     st.markdown("#### 📐 3D CAD Reference Design")
     st.caption("Enter planned coordinates for each structural element:")
-
-    if "cad_elements" not in st.session_state:
-        st.session_state.cad_elements = [
-            {"object_type": "Pillar", "x": 160, "y": 200, "width": 50, "height": 70},
-            {"object_type": "Pillar", "x": 320, "y": 200, "width": 50, "height": 70},
-            {"object_type": "Pillar", "x": 480, "y": 200, "width": 50, "height": 70},
-            {"object_type": "Beam",   "x": 320, "y": 120, "width": 300, "height": 30},
-        ]
 
     # Add new element
     with st.expander("➕ Add CAD Element", expanded=False):
@@ -450,13 +454,14 @@ with st.sidebar:
             cad_data = json.load(uploaded_cad)
             if isinstance(cad_data, list):
                 st.session_state.cad_elements = cad_data
-                st.success("CAD Data Loaded Successfully!")
-                time.sleep(1)
+                st.success("✅ CAD Data Loaded Successfully!")
                 st.rerun()
             else:
-                st.error("Invalid format: CAD JSON must be a list of elements.")
+                st.error("❌ Invalid format: CAD JSON must be a list of elements.")
+        except json.JSONDecodeError as e:
+            st.error(f"❌ Error parsing JSON: {e}")
         except Exception as e:
-            st.error(f"Error parsing JSON: {e}")
+            st.error(f"❌ Unexpected error: {e}")
 
     st.divider()
     use_mock = st.checkbox("🔧 Demo Mode (no backend needed)", value=True)
