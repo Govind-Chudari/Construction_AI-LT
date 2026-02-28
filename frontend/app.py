@@ -730,8 +730,8 @@ with tab_alerts:
     
     c_img, c_text = st.columns([3, 2])
     with c_img:
-        st.image(astar_vis, use_container_width=True, caption="Alternate MEP pipe routing avoiding new structure placement")
-    with c_text:
+        st.image(astar_vis, caption="Alternate MEP pipe routing avoiding new structure placement")
+with c_text:
         st.markdown(f'''
         <div style='background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.05); border-radius:8px; padding:20px; font-family:JetBrains Mono,monospace;font-size:12px;'>
             <div style='color:#00e676; margin-bottom:12px; font-size:14px; font-weight:bold;'>✓ VALID REROUTE FOUND</div>
