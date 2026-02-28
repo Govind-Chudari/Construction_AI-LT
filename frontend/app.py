@@ -729,21 +729,23 @@ with tab_alerts:
     astar_vis = draw_astar_grid(reroute, obstacles, width=800, height=300)
     
     c_img, c_text = st.columns([3, 2])
-    with c_img:
-        st.image(astar_vis, caption="Alternate MEP pipe routing avoiding new structure placement")
+
+with c_img:
+    st.image(astar_vis, caption="Alternate MEP pipe routing avoiding new structure placement")
+
 with c_text:
-        st.markdown(f'''
-        <div style='background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.05); border-radius:8px; padding:20px; font-family:JetBrains Mono,monospace;font-size:12px;'>
-            <div style='color:#00e676; margin-bottom:12px; font-size:14px; font-weight:bold;'>✓ VALID REROUTE FOUND</div>
-            <div style='color:#aaa;margin-bottom:8px;'>Path Length: <span style='color:#fff'>{reroute.get("path_length",24)} nodes</span></div>
-            <div style='color:#aaa;margin-bottom:8px;'>Compute Time: <span style='color:#fff'>{reroute.get("compute_ms",12)} ms</span></div>
-            <div style='color:#aaa;margin-bottom:8px;'>Extra Pipe Cost: <span style='color:#ffaa00'>+₹4,500</span></div>
-            <div style='color:#888; margin-top:16px; font-size:11px; line-height:1.4;'>
-                The HVAC / Fire suppression lines can bypass the shifted pillar by routing 0.8 meters north.
-            </div>
-            <button style='width:100%; margin-top:16px; background:#ff3f1a; border:none; color:white; padding:8px; border-radius:4px; font-weight:bold; cursor:pointer;'>NOTIFY SITE ENGINEER</button>
+    st.markdown(f'''
+    <div style='background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.05); border-radius:8px; padding:20px; font-family:JetBrains Mono,monospace;font-size:12px;'>
+        <div style='color:#00e676; margin-bottom:12px; font-size:14px; font-weight:bold;'>✓ VALID REROUTE FOUND</div>
+        <div style='color:#aaa;margin-bottom:8px;'>Path Length: <span style='color:#fff'>{reroute.get("path_length",24)} nodes</span></div>
+        <div style='color:#aaa;margin-bottom:8px;'>Compute Time: <span style='color:#fff'>{reroute.get("compute_ms",12)} ms</span></div>
+        <div style='color:#aaa;margin-bottom:8px;'>Extra Pipe Cost: <span style='color:#ffaa00'>+₹4,500</span></div>
+        <div style='color:#888; margin-top:16px; font-size:11px; line-height:1.4;'>
+            The HVAC / Fire suppression lines can bypass the shifted pillar by routing 0.8 meters north.
         </div>
-        ''', unsafe_allow_html=True)
+        <button style='width:100%; margin-top:16px; background:#ff3f1a; border:none; color:white; padding:8px; border-radius:4px; font-weight:bold; cursor:pointer;'>NOTIFY SITE ENGINEER</button>
+    </div>
+    ''', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ─── Footer ───────────────────────────────────────────────────────────────────
