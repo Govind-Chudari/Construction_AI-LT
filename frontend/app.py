@@ -1,4 +1,3 @@
-# frontend/app.py
 """
 ConstructAI — Streamlit Dashboard
 Site engineers upload drone/mobile photos + CAD references here.
